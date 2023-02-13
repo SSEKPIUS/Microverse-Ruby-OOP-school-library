@@ -9,18 +9,11 @@ class Person
     @parent_permission = parent_permission
   end
 
-  def __is_of_age?
-    return unless @age >= 18
+  def of_age?
+    @age >= 18
   end
 
   def can_use_services?
-    if __is_of_age? || @parent_permission
-      true
-    else
-      false
-    end
+    of_age? || @parent_permission
   end
 end
-
-person = Person.new(17, 'Joshua')
-puts person.can_use_services?
