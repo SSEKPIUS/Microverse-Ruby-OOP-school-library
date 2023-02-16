@@ -40,6 +40,7 @@ After you're finished please remove all the comments and instructions!
   - [🔭 Future Features ](#-future-features-)
   - [🤝 Contributing ](#-contributing-)
   - [🙏 Acknowledgments ](#-acknowledgments-)
+  - [⭐️ Show your Support](#-show-your-support-)
   - [📝 License ](#-license-)
 
 <!-- PROJECT DESCRIPTION -->
@@ -136,6 +137,13 @@ Run ruby person.rb
 Contributions, issues, and feature requests are welcome!
 
 Feel free to check the [issues page](../../issues/).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- SHOW YOUR SUPPORT -->
+
+## ⭐️ Show your support
+If you like this project give it a star
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
