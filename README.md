@@ -68,7 +68,7 @@ After you're finished please remove all the comments and instructions!
 - **Student class**
 - **Rental class**
 - **Book renting**
-- 
+
 <!-- GETTING STARTED -->
 
 ## 💻 Getting Started <a name="getting-started"></a>
