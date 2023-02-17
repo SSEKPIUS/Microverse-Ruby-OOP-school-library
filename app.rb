@@ -137,7 +137,6 @@ class App
     puts 'Please select the id of the book from the list of books'
     @books.each_with_index { |book, index| puts "#{index}. #{book.title} by #{book.author}" }
 
-
     book_id = gets.chomp.to_i
     if (0..@books.length).include?(book_id)
       puts 'Please select person id from list of people'
