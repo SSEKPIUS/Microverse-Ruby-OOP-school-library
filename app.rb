@@ -3,6 +3,7 @@ require_relative './book'
 require_relative './rental'
 require_relative './teacher'
 require_relative './classroom'
+require 'date'
 
 # rubocop:disable Metrics
 class App
@@ -13,53 +14,11 @@ class App
     @class = Classroom.new('Grade 5')
   end
 
-  def run
-    puts 'Welcome to School Library App!'
-    puts
-    select
-  end
-
-  def select
-    puts 'Please choose an option by entering a number:'
-    puts '1 - List all books'
-    puts '2 - List all people'
-    puts '3 - Create a person'
-    puts '4 - Create a book'
-    puts '5 - Create a rental'
-    puts '6 - List all rentals for a given person id'
-    puts '7 - Exit'
-    option = gets.chomp
-    run_choice option
-  end
-
-  def run_choice(input)
-    case input
-    when '1'
-      list_books
-    when '2'
-      list_people
-    when '3'
-      create_person
-    when '4'
-      create_book
-    when '5'
-      create_rental
-    when '6'
-      list_rentals
-    when '7'
-      puts 'See you again'
-    else
-      puts 'Invalid! Please enter a number from 1 to 7'
-      select
-    end
-  end
-
   def list_books
     puts 'No books added!' if @books.empty?
 
     @books.each { |book| puts "Title: #{book.title}, author: #{book.author}" }
     puts ''
-    select
   end
 
   def list_people
@@ -67,7 +26,6 @@ class App
 
     @people.map { |person| puts "[#{person.class}] ID: #{person.id}, Name: #{person.name}, Age: #{person.age}" }
     puts ''
-    select
   end
 
   def create_person
@@ -90,12 +48,13 @@ class App
     print 'Enter your name: '
     name = gets.chomp
 
-    new_student = Student.new(@classroom, age, name)
+    print 'Parent permission [y/n]:'
+    permission = gets.chomp
+
+    new_student = Student.new(@classroom, age, name, parent_permission: permission)
     @people.push(new_student)
 
     puts "Student #{name.upcase} created successfully"
-
-    select
   end
 
   def create_teacher
@@ -112,8 +71,6 @@ class App
     @people.push(new_teacher)
 
     puts "Teacher #{name.upcase} created successfully"
-
-    select
   end
 
   def create_book
@@ -127,53 +84,53 @@ class App
     @books.push(new_book)
 
     puts "#{title} by #{author} created successfully"
-    select
   end
 
   def create_rental
-    print 'Date of book rental: '
-    date = gets.chomp.to_i
-
-    puts 'Please select the id of the book from the list of books'
-    @books.each_with_index { |book, index| puts "#{index}. #{book.title} by #{book.author}" }
-
-    book_id = gets.chomp.to_i
-    if (0..@books.length).include?(book_id)
-      puts 'Please select person id from list of people'
-      @people.each_with_index { |person, index| puts "#{index}. #{person.name}" }
-      person_id = gets.chomp.to_i
-      new_rental = Rental.new(date, @books[book_id], @people[person_id])
-      @rentals.push(new_rental)
-
-      puts 'Rental created successfully'
-
-      select
-
+    if @books.empty? || @people.empty?
+      puts 'There are no books or people'
     else
-      print 'Invalid! Please select a valid book id: '
+      print 'Date of book rental: '
+      date = gets.chomp.to_s
+
+      puts 'Please select the id of the book from the list of books'
+      @books.each_with_index { |book, index| puts "#{index}. #{book.title} by #{book.author}" }
+
+      book_id = gets.chomp.to_i
+      if (0..@books.length - 1).include?(book_id)
+        puts 'Please select person id from list of people'
+        @people.each_with_index { |person, index| puts "#{index}. #{person.name}" }
+        person_id = gets.chomp.to_i
+        if (0..@people.length - 1).include?(person_id)
+          new_rental = Rental.new(date, @books[book_id], @people[person_id])
+          @rentals.push(new_rental)
+
+          @rentals.each do |rent|
+            puts "#{rent.book.title} by #{rent.book.author} rental created successfully"
+          end
+
+        else
+          puts 'Invalid person id'
+        end
+
+      else
+        puts 'Invalid! No book with that id'
+      end
     end
   end
 
   def list_rentals
-    if @rentals.empty?
+    if @people.empty?
       puts 'No data for people found.'
-      select
+      return
     end
 
     print 'Enter person ID: '
     person_id = gets.chomp.to_i
     puts 'Books rentals:'
     @rentals.each do |rented|
-      puts "Date: #{rented.date}, Book #{rented.book} by #{rented.person}" if rented.person.id == person_id
+      puts "Book #{rented.book.title} by #{rented.book.author}" if rented.person.id == person_id
     end
-
-    select
   end
 end
-
-def main
-  app = App.new
-  app.run
-end
 # rubocop:enable Metrics
-main

@@ -39,8 +39,8 @@ After you're finished please remove all the comments and instructions!
   - [👥 Authors ](#-authors-)
   - [🔭 Future Features ](#-future-features-)
   - [🤝 Contributing ](#-contributing-)
+  - [⭐️ Show your support ](#️-show-your-support-)
   - [🙏 Acknowledgments ](#-acknowledgments-)
-  - [⭐️ Show your support](#-show-your-support-)
   - [📝 License ](#-license-)
 
 <!-- PROJECT DESCRIPTION -->
@@ -105,7 +105,7 @@ cd Ruby-OOP-school-library
 
 3. Run the code
 ```
-Run ruby person.rb
+Run ruby main.rb
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
