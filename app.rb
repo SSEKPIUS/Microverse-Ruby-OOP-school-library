@@ -90,9 +90,6 @@ class App
     print 'Enter your name: '
     name = gets.chomp
 
-    print 'Does student have parent permission [y/n]: '
-    parent_permission = gets.chomp
-
     new_student = Student.new(@classroom, age, name)
     @people.push(new_student)
 
