@@ -16,7 +16,6 @@ class App
 
   def list_books
     puts 'No books added!' if @books.empty?
-
     @books.each { |book| puts "Title: #{book.title}, author: #{book.author}" }
     puts ''
   end
