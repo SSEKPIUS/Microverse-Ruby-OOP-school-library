@@ -5,7 +5,6 @@ require_relative './teacher'
 require_relative './classroom'
 require 'date'
 
-# rubocop:disable Metrics
 class App
   def initialize
     @people = []
@@ -22,7 +21,6 @@ class App
 
   def list_people
     puts 'No person added!' if @people.empty?
-
     @people.map { |person| puts "[#{person.class}] ID: #{person.id}, Name: #{person.name}, Age: #{person.age}" }
     puts ''
   end
@@ -85,36 +83,35 @@ class App
     puts "#{title} by #{author} created successfully"
   end
 
+  def insert_into_rentals(date, book_id)
+    person_id = gets.chomp.to_i
+    if (0..@people.length - 1).include?(person_id)
+      new_rental = Rental.new(date, @books[book_id], @people[person_id])
+      @rentals.push(new_rental)
+      @rentals.each do |rent|
+        puts "#{rent.book.title} by #{rent.book.author} rental created successfully"
+      end
+    else
+      puts 'Invalid person id'
+    end
+  end
+
   def create_rental
     if @books.empty? || @people.empty?
       puts 'There are no books or people'
+      return
+    end
+    puts 'Date of book rental: '
+    date = gets.chomp.to_s
+    puts 'Please select the id of the book from the list of books'
+    @books.each_with_index { |book, index| puts "#{index}. #{book.title} by #{book.author}" }
+    book_id = gets.chomp.to_i
+    if (0..@books.length - 1).include?(book_id)
+      puts 'Please select person id from list of people'
+      @people.each_with_index { |person, index| puts "#{index}. #{person.name}" }
+      insert_into_rentals(date, book_id)
     else
-      print 'Date of book rental: '
-      date = gets.chomp.to_s
-
-      puts 'Please select the id of the book from the list of books'
-      @books.each_with_index { |book, index| puts "#{index}. #{book.title} by #{book.author}" }
-
-      book_id = gets.chomp.to_i
-      if (0..@books.length - 1).include?(book_id)
-        puts 'Please select person id from list of people'
-        @people.each_with_index { |person, index| puts "#{index}. #{person.name}" }
-        person_id = gets.chomp.to_i
-        if (0..@people.length - 1).include?(person_id)
-          new_rental = Rental.new(date, @books[book_id], @people[person_id])
-          @rentals.push(new_rental)
-
-          @rentals.each do |rent|
-            puts "#{rent.book.title} by #{rent.book.author} rental created successfully"
-          end
-
-        else
-          puts 'Invalid person id'
-        end
-
-      else
-        puts 'Invalid! No book with that id'
-      end
+      puts 'Invalid! No book with that id'
     end
   end
 
@@ -123,7 +120,6 @@ class App
       puts 'No data for people found.'
       return
     end
-
     print 'Enter person ID: '
     person_id = gets.chomp.to_i
     puts 'Books rentals:'
@@ -132,4 +128,3 @@ class App
     end
   end
 end
-# rubocop:enable Metrics
