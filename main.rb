@@ -2,6 +2,7 @@ require_relative './app'
 require_relative './rental'
 require 'json'
 
+# rubocop:disable Metrics
 @app = App.new
 
 def options
@@ -30,6 +31,9 @@ def choice()
     @app.create_rental
   when '6'
     @app.list_rentals
+  when '7'
+    @app.save
+    exit
   else
     puts 'See you again'
     exit
@@ -42,6 +46,6 @@ def run()
     choice
   end
 end
-
+# rubocop:enable Metrics
 puts 'Welcome to School Library App!\n'
 run

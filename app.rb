@@ -17,24 +17,38 @@ class App
     @class = Classroom.new('Grade 5')
   end
 
+  def save
+    @hasher.save_data('students', @students)
+    @hasher.save_data('teachers', @teachers)
+    @hasher.save_data('books', @books)
+    @hasher.save_data('rentals', @rentals)
+  end
+
   def list_books
     puts 'No books added!' if @books.empty?
-    @books.each { |book| puts "Title: #{book.title}, author: #{book.author}" }
+    @books.each { |book| puts "#{book['title']} by #{book['author']}" }
     puts ''
   end
 
   def list_students
     puts 'No person added!' if @students.empty?
-    @students.map { |student| puts "[#{student.class}] ID: #{student.id}, Name: #{student.name}, Age: #{student.age}" }
+    @students.map do |student|
+      puts "Name: #{student['name']}, Age: #{student['age']}, Permission: #{student['parent_permission']}"
+    end
+    puts ''
   end
 
   def list_teachers
     puts 'No person added!' if @teachers.empty?
-    @teachers.map { |teacher| puts "[#{teacher.class}] ID: #{teacher.id}, Name: #{teacher.name}, Specialization: #{teacher.specialization}" }
+    @teachers.map do |teacher|
+      puts "Name: #{teacher['name']}, Age: #{teacher['age']}, Specialization: #{teacher['specialization']}"
+    end
   end
 
   def list_people
+    puts "Students"
     list_students
+    puts "Teachers"
     list_teachers
     puts ''
   end
@@ -62,9 +76,7 @@ class App
     print 'Parent permission [y/n]:'
     permission = gets.chomp
 
-    new_student = Student.new(@classroom, age, name, parent_permission: permission)
-    @students.push({age: new_student.age, name: new_student.name, parent_permission: new_student.parent_permission},)
-    @hasher.save_data('students', @students)
+    @students.push({ name: name, age: age, parent_permission: permission })
 
     puts "Student #{name.upcase} created successfully"
   end
@@ -79,9 +91,7 @@ class App
     print 'Enter specialization: '
     specialization = gets.chomp
 
-    new_teacher = Teacher.new(specialization, age, name)
-    @teachers.push(new_teacher)
-    @hasher.save_data('teachers', @teachers)
+    @teachers.push({ name: name, age: age, specialization: specialization })
 
     puts "Teacher #{name.upcase} created successfully"
   end
@@ -93,9 +103,7 @@ class App
     print 'Enter book author: '
     author = gets.chomp
 
-    new_book = Book.new(title, author)
-    @books.push(new_book)
-    @hasher.save_data('books', @books)
+    @books.push({ title: title, author: author })
 
     puts "#{title} by #{author} created successfully"
   end
@@ -104,9 +112,8 @@ class App
     person_id = gets.chomp.to_i
     if (0..@people.length - 1).include?(person_id)
       new_rental = Rental.new(date, @books[book_id], @people[person_id])
-      @rentals.push({date: new_rental.date, book: new_rental.book.title, person: new_rental.person.name},)
-      @hasher.save_data('rentals', @rentals)
-      puts "rental created successfully"
+      @rentals.push({ date: new_rental.date, book: new_rental.book.title, person: new_rental.person.name })
+      puts 'rental created successfully'
     else
       puts 'Invalid person id'
     end
@@ -132,15 +139,14 @@ class App
   end
 
   def list_rentals
-    if @people.empty?
+    if @rentals.empty?
       puts 'No data for people found.'
       return
     end
-    print 'Enter person ID: '
-    person_id = gets.chomp.to_s
     puts 'Books rentals:'
     @rentals.each do |rented|
-      puts "Book #{rented.book.title} by #{rented.book.author}" if rented.person == person_id
+      puts "#{rented['person']} rented #{rented['book']} on #{rented['date']}"
+      puts ''
     end
   end
 end

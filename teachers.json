@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Eyin",
+    "age": 33,
+    "specialization": "History"
+  },
+  {
+    "name": "Henry",
+    "age": 32,
+    "specialization": "Arts"
+  },
+  {
+    "name": "Gina",
+    "age": 22,
+    "specialization": "Biology"
+  }
+]

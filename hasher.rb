@@ -6,14 +6,10 @@ class Hasher
   end
 
   def save_data(filename, data)
-    File.write("#{filename}.json", data.to_json)
+    File.write("#{filename}.json", JSON.pretty_generate(data))
   end
 
   def recover_data(filename)
-    if File.exist?("#{filename}.json")
-     return JSON.parse(File.read("#{filename}.json"))
-    else
-     return []
-    end
+    return JSON.parse(File.read("#{filename}.json")) if File.exist?("#{filename}.json")
   end
 end
