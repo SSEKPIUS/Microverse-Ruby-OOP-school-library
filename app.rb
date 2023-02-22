@@ -46,9 +46,9 @@ class App
   end
 
   def list_people
-    puts "Students"
+    puts 'Students'
     list_students
-    puts "Teachers"
+    puts 'Teachers'
     list_teachers
     puts ''
   end
