@@ -110,9 +110,9 @@ class App
 
   def insert_into_rentals(date, book_id)
     person_id = gets.chomp.to_i
-    if (0..@people.length - 1).include?(person_id)
-      new_rental = Rental.new(date, @books[book_id], @people[person_id])
-      @rentals.push({ date: new_rental.date, book: new_rental.book.title, person: new_rental.person.name })
+    if (0..@students.length - 1).include?(person_id)
+      new_rental = Rental.new(date, @books[book_id], @students[person_id])
+      @rentals.push({ date: new_rental.date, book: new_rental.book['title'], person: new_rental.person6['name'] })
       puts 'rental created successfully'
     else
       puts 'Invalid person id'
@@ -120,18 +120,18 @@ class App
   end
 
   def create_rental
-    if @books.empty? || @people.empty?
+    if @books.empty?
       puts 'There are no books or people'
       return
     end
     puts 'Date of book rental: '
     date = gets.chomp.to_s
     puts 'Please select the id of the book from the list of books'
-    @books.each_with_index { |book, index| puts "#{index}. #{book.title} by #{book.author}" }
+    @books.each_with_index { |book, index| puts "#{index}. #{book['title']} by #{book['author']}" }
     book_id = gets.chomp.to_i
     if (0..@books.length - 1).include?(book_id)
       puts 'Please select person id from list of people'
-      @people.each_with_index { |person, index| puts "#{index}. #{person.name}" }
+      @students.each_with_index { |student, index| puts "#{index}. #{student['name']}" }
       insert_into_rentals(date, book_id)
     else
       puts 'Invalid! No book with that id'
