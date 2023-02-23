@@ -1,0 +1,27 @@
+[
+  {
+    "name": "sandra",
+    "age": 23,
+    "parent_permission": "y"
+  },
+  {
+    "name": "Theresa",
+    "age": 20,
+    "parent_permission": "y"
+  },
+  {
+    "name": "Joshua",
+    "age": 23,
+    "parent_permission": "y"
+  },
+  {
+    "name": "Ryan",
+    "age": 21,
+    "parent_permission": "y"
+  },
+  {
+    "name": "Onyi Demilade",
+    "age": 21,
+    "parent_permission": "y"
+  }
+]

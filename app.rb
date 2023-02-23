@@ -4,24 +4,52 @@ require_relative './rental'
 require_relative './teacher'
 require_relative './classroom'
 require 'date'
+require 'json'
+require_relative './hasher'
 
 class App
   def initialize
-    @people = []
-    @books = []
-    @rentals = []
+    @hasher = Hasher.new
+    @rentals = @hasher.recover_data('rentals')
+    @students = @hasher.recover_data('students')
+    @teachers = @hasher.recover_data('teachers')
+    @books = @hasher.recover_data('books')
     @class = Classroom.new('Grade 5')
+  end
+
+  def save
+    @hasher.save_data('students', @students)
+    @hasher.save_data('teachers', @teachers)
+    @hasher.save_data('books', @books)
+    @hasher.save_data('rentals', @rentals)
   end
 
   def list_books
     puts 'No books added!' if @books.empty?
-    @books.each { |book| puts "Title: #{book.title}, author: #{book.author}" }
+    @books.each { |book| puts "#{book['title']} by #{book['author']}" }
     puts ''
   end
 
+  def list_students
+    puts 'No person added!' if @students.empty?
+    @students.map do |student|
+      puts "Name: #{student['name']}, Age: #{student['age']}, Permission: #{student['parent_permission']}"
+    end
+    puts ''
+  end
+
+  def list_teachers
+    puts 'No person added!' if @teachers.empty?
+    @teachers.map do |teacher|
+      puts "Name: #{teacher['name']}, Age: #{teacher['age']}, Specialization: #{teacher['specialization']}"
+    end
+  end
+
   def list_people
-    puts 'No person added!' if @people.empty?
-    @people.map { |person| puts "[#{person.class}] ID: #{person.id}, Name: #{person.name}, Age: #{person.age}" }
+    puts 'Students'
+    list_students
+    puts 'Teachers'
+    list_teachers
     puts ''
   end
 
@@ -48,8 +76,7 @@ class App
     print 'Parent permission [y/n]:'
     permission = gets.chomp
 
-    new_student = Student.new(@classroom, age, name, parent_permission: permission)
-    @people.push(new_student)
+    @students.push({ name: name, age: age, parent_permission: permission })
 
     puts "Student #{name.upcase} created successfully"
   end
@@ -64,8 +91,7 @@ class App
     print 'Enter specialization: '
     specialization = gets.chomp
 
-    new_teacher = Teacher.new(specialization, age, name)
-    @people.push(new_teacher)
+    @teachers.push({ name: name, age: age, specialization: specialization })
 
     puts "Teacher #{name.upcase} created successfully"
   end
@@ -77,38 +103,35 @@ class App
     print 'Enter book author: '
     author = gets.chomp
 
-    new_book = Book.new(title, author)
-    @books.push(new_book)
+    @books.push({ title: title, author: author })
 
     puts "#{title} by #{author} created successfully"
   end
 
   def insert_into_rentals(date, book_id)
     person_id = gets.chomp.to_i
-    if (0..@people.length - 1).include?(person_id)
-      new_rental = Rental.new(date, @books[book_id], @people[person_id])
-      @rentals.push(new_rental)
-      @rentals.each do |rent|
-        puts "#{rent.book.title} by #{rent.book.author} rental created successfully"
-      end
+    if (0..@students.length - 1).include?(person_id)
+      new_rental = Rental.new(date, @books[book_id], @students[person_id])
+      @rentals.push({ date: new_rental.date, book: new_rental.book['title'], person: new_rental.person6['name'] })
+      puts 'rental created successfully'
     else
       puts 'Invalid person id'
     end
   end
 
   def create_rental
-    if @books.empty? || @people.empty?
+    if @books.empty?
       puts 'There are no books or people'
       return
     end
     puts 'Date of book rental: '
     date = gets.chomp.to_s
     puts 'Please select the id of the book from the list of books'
-    @books.each_with_index { |book, index| puts "#{index}. #{book.title} by #{book.author}" }
+    @books.each_with_index { |book, index| puts "#{index}. #{book['title']} by #{book['author']}" }
     book_id = gets.chomp.to_i
     if (0..@books.length - 1).include?(book_id)
       puts 'Please select person id from list of people'
-      @people.each_with_index { |person, index| puts "#{index}. #{person.name}" }
+      @students.each_with_index { |student, index| puts "#{index}. #{student['name']}" }
       insert_into_rentals(date, book_id)
     else
       puts 'Invalid! No book with that id'
@@ -116,15 +139,14 @@ class App
   end
 
   def list_rentals
-    if @people.empty?
+    if @rentals.empty?
       puts 'No data for people found.'
       return
     end
-    print 'Enter person ID: '
-    person_id = gets.chomp.to_i
     puts 'Books rentals:'
     @rentals.each do |rented|
-      puts "Book #{rented.book.title} by #{rented.book.author}" if rented.person.id == person_id
+      puts "#{rented['person']} rented #{rented['book']} on #{rented['date']}"
+      puts ''
     end
   end
 end

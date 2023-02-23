@@ -127,6 +127,7 @@ Run ruby main.rb
 ## 🔭 Future Features <a name="future-features">
 - [ ] Add more classes
 - [ ] Create UI
+- [ ] Allow teachers to borrow books
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
