@@ -6,7 +6,6 @@ describe Student do
   age = 21
   id = 212
   parent_permission = true
-
   it 'Should create an instance of Student class' do
     student = Student.new(age, id, name, parent_permission: parent_permission)
     expect(student).to be_instance_of Student

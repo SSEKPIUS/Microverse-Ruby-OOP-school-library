@@ -8,7 +8,6 @@ describe Rental do
   age = 21
   id = 212
   parent_permission = true
-
   it 'Should create an instance of the Rental class' do
     date = Date.parse '2022/09/09'
     book = Book.new('The Great Gatsby', 'F. Scott Fitzgerald')

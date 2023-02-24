@@ -12,12 +12,9 @@ describe Classroom do
     age = 21
     id = 212
     parent_permission = true
-
     classroom = Classroom.new('Physics')
     student = Student.new(age, id, name, parent_permission: parent_permission)
-
     new_student = classroom.add_student(student)
-
     expect(new_student.students.length).to be 1
   end
 end
