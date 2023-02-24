@@ -13,16 +13,16 @@ describe Solver do
     expect { solver.factorial('hello') }.to raise_error(ArgumentError, 'Argument must be a non-negative integer')
   end
 
-  #   it 'Should test reverse' do
-  #     expect(solver.reverse('hello')).to eq 'olleh'
-  #     expect(solver.reverse('')).to eq ''
-  #     expect(solver.reverse('racecar')).to eq 'racecar'
-  #   end
+    it 'Should test reverse' do
+      expect(solver.reverse('hello')).to eq 'olleh'
+      expect(solver.reverse('')).to eq ''
+      expect(solver.reverse('racecar')).to eq 'racecar'
+    end
 
-  #   it 'Should test fizzbuzz' do
-  #     expect(solver.fizzbuzz(15)).to eq 'fizzbuzz'
-  #     expect(solver.fizzbuzz(9)).to eq 'fizz'
-  #     expect(solver.fizzbuzz(10)).to eq 'buzz'
-  #     expect(solver.fizzbuzz(7)).to eq '7'
-  #   end
+    it 'Should test fizzbuzz' do
+      expect(solver.fizzbuzz(15)).to eq 'fizzbuzz'
+      expect(solver.fizzbuzz(9)).to eq 'fizz'
+      expect(solver.fizzbuzz(10)).to eq 'buzz'
+      expect(solver.fizzbuzz(7)).to eq '7'
+    end
 end
