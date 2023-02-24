@@ -21,7 +21,6 @@ describe Person do
     expect(person.correct_name).to be person.name
   end
 
-
   it 'correct_name method should be name' do
     name = 'John'
     age = 21
