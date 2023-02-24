@@ -63,7 +63,7 @@ describe TrimmerDecorator do
     it('correct_name method should reduce string if length is > 10') do
       expect(@trim.correct_name).to eq('Pair progr')
     end
-    
+
     it('Should create an instance of the TrimmerDecorator class') do
       expect(@trim).to be_instance_of TrimmerDecorator
     end
