@@ -119,6 +119,11 @@ Run ruby main.rb
 - GitHub: [@Tamunokuro](https://github.com/Tamunokuro)
 - LinkedIn: [@Joshua Blue-Jack](https://linkedin.com/in/joshua-blue-jack)
 
+👤 **Author2**
+
+- GitHub: [@Pius](https://github.com/SSEKPIUS)
+- LinkedIn: [@pius](https://www.linkedin.com/in/piusssekweyama)
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
